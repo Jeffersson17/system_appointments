@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    env_file:
+      - ./envs/database.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "appointments"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - mynetwork
+
+  django:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/api
+      - /api/.venv
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - ./envs/database.env
+    networks:
+      - mynetwork
+
+volumes:
+  postgres_data:
+
+networks:
+  mynetwork:
