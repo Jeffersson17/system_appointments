@@ -1,2 +1,7 @@
 /envs
 __pycache__/
+media/
+django/**/logos/
+*.png
+*.jpg
+*.jpeg

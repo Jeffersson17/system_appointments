@@ -19,12 +19,11 @@ services:
       - mynetwork
 
   django:
-    build: .
+    build: ./django
     ports:
       - "8000:8000"
     volumes:
-      - .:/api
-      - /api/.venv
+      - ./django:/app
     depends_on:
       postgres:
         condition: service_healthy
