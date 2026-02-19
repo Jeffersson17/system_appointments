@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-WORKDIR /api
+WORKDIR /app
 
 COPY ./system_appointments/requirements/main.txt .
 
