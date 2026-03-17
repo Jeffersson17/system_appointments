@@ -9,6 +9,12 @@ services:
       - ./envs/postgres.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "appointments"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
     ports:
       - "5433:5432"
   django:
@@ -22,7 +28,8 @@ services:
     volumes:
       - ./django:/app
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres_data:
