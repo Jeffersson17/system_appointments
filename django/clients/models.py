@@ -1,8 +1,8 @@
+from django.db import models
+
 import shortuuid
 
 from enterprise.models import Enterprise
-
-from django.db import models
 
 
 class Client(models.Model):

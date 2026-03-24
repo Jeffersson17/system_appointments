@@ -1,6 +1,6 @@
-import shortuuid
-
 from django.db import models
+
+import shortuuid
 
 
 class Enterprise(models.Model):
