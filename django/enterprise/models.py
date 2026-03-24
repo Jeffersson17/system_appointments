@@ -12,9 +12,13 @@ class Enterprise(models.Model):
         unique=True
     )
     company_name = models.CharField(max_length=255, unique=True)
+    user = models.OneToOneField(
+        'user.User', 
+        on_delete=models.CASCADE, 
+        related_name='enterprise'
+    )
     owner_name = models.CharField(max_length=255)
     logotipo = models.ImageField(upload_to='enterprise/logos/', null=True, blank=True)
-    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Enterprise"
@@ -23,5 +27,3 @@ class Enterprise(models.Model):
 
     def __str__(self):
         return self.company_name
-
-
