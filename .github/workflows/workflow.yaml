@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r system_appointments/requirements/ci.txt
+          pip install -r django/system_appointments/requirements/ci.txt
           pip install flake8 isort black pylint
 
       - name: Run Lint
