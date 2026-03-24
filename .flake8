@@ -5,6 +5,7 @@ exclude =
     .git,
     __pycache__,
     migrations,
+    manage.py,
     venv,
     .venv,
     env,
