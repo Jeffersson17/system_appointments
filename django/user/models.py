@@ -1,7 +1,7 @@
+import shortuuid
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-
-import shortuuid
 
 
 class UserManager(BaseUserManager):
