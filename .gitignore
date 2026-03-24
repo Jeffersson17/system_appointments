@@ -5,3 +5,5 @@ django/**/logos/
 *.png
 *.jpg
 *.jpeg
+.vscode/
+.idea/
