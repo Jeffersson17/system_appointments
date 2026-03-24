@@ -13,8 +13,8 @@ class Enterprise(models.Model):
     )
     company_name = models.CharField(max_length=255, unique=True)
     user = models.OneToOneField(
-        'user.User', 
-        on_delete=models.CASCADE, 
+        'user.User',
+        on_delete=models.CASCADE,
         related_name='enterprise'
     )
     owner_name = models.CharField(max_length=255)

@@ -25,6 +25,7 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, role='ADMIN', **extra_fields)
 
+
 class User(AbstractUser):
     id = models.CharField(
         primary_key=True,
