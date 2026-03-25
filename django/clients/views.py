@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 
 from clients.models import Client
 from clients.serializers import ClientSerializer
@@ -14,3 +14,8 @@ class ClientViewSet(viewsets.ModelViewSet):
         "last_name" : ["exact", "icontains"],
         "phone_number" : ["exact", "icontains"],
     }
+
+
+class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
