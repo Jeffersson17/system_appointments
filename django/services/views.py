@@ -15,6 +15,6 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
 
 
-class ServiceDetailView(generics.RetrieveAPIView):
+class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Services.objects.all()
     serializer_class = ServiceSerializer
