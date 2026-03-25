@@ -3,8 +3,6 @@ from rest_framework import generics, viewsets
 from enterprise.models import Enterprise
 from enterprise.serializers import EnterpriseSerializer
 
-from user.models import User
-
 
 class EnterpriseViewSet(viewsets.ModelViewSet):
     queryset = Enterprise.objects.all()

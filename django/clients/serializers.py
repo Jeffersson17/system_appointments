@@ -2,8 +2,8 @@ from rest_framework import serializers
 
 from clients.models import Client
 from enterprise.serializers import EnterpriseSerializer
-from user.serializers import UserSerializer
 from user.models import User
+from user.serializers import UserSerializer
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -19,9 +19,7 @@ class ClientSerializer(serializers.ModelSerializer):
         email = validated_data.pop("email")
         password = validated_data.pop("password")
         user = User.objects.create_user(
-            name=f"{validated_data['first_name']} {validated_data['last_name']}",
-            email=email, 
-            password=password
+            name=f"{validated_data['first_name']} {validated_data['last_name']}", email=email, password=password
         )
         client = Client.objects.create(user=user, **validated_data)
         return client
