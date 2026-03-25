@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from clients.models import Client
-from enterprise.serializers import EnterpriseSerializer
 from user.models import User
 from user.serializers import UserSerializer
 
