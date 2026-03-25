@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics
+from rest_framework import generics, viewsets
 
 from enterprise.models import Enterprise
 from enterprise.serializers import EnterpriseSerializer
