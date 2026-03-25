@@ -9,10 +9,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = {
-        "name" : ["exact", "icontains"],
-        "email" : ["exact", "icontains"]
-    }
+    filterset_fields = {"name": ["exact", "icontains"], "email": ["exact", "icontains"]}
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):

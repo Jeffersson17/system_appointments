@@ -10,10 +10,9 @@ class EnterpriseViewSet(viewsets.ModelViewSet):
     serializer_class = EnterpriseSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {
-        "company_name" : ["exact", "icontains"],
-        "owner_name" : ["exact", "icontains"],
+        "company_name": ["exact", "icontains"],
+        "owner_name": ["exact", "icontains"],
     }
-
 
 
 class EnterpriseDetailView(generics.RetrieveUpdateDestroyAPIView):

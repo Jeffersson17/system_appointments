@@ -10,9 +10,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {
-        "service_name" : ["exact", "icontains"],
+        "service_name": ["exact", "icontains"],
     }
-
 
 
 class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
