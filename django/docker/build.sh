@@ -1,10 +1,5 @@
 set -e
 
-if [ "$MODE" = "DEV" ]; then
-    echo "Starting makemigrations"
-    python manage.py makemigrations
-fi
-
 echo "Starting migrate"
 python manage.py migrate
 
