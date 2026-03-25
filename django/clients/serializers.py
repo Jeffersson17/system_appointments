@@ -22,3 +22,14 @@ class ClientSerializer(serializers.ModelSerializer):
         )
         client = Client.objects.create(user=user, **validated_data)
         return client
+
+    def get_fields(self):
+        fields = super().get_fields()
+        request = self.context.get("request")
+        if request and request.method in ["POST"]:
+            fields["email"].required = True
+            fields["password"].required = True
+        else:
+            fields.pop("email", None)
+            fields.pop("password", None)
+        return fields
