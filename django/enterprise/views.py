@@ -1,7 +1,7 @@
+from core.permissions import IsEnterprise
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
-from core.permissions import IsEnterprise
 
 from enterprise.models import Enterprise
 from enterprise.serializers import EnterpriseSerializer

@@ -2,7 +2,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 
-
 from clients.models import Client
 from clients.serializers import ClientSerializer
 
