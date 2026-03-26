@@ -3,12 +3,14 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from appointments.views import AppointmentViewSet
 from clients.views import ClientViewSet
 from enterprise.views import EnterpriseViewSet
 from services.views import ServiceViewSet
 from user.views import UserViewSet
 
 router = routers.DefaultRouter()
+router.register(r"appointments", AppointmentViewSet)
 router.register(r"users", UserViewSet)
 router.register(r"services", ServiceViewSet)
 router.register(r"enterprises", EnterpriseViewSet)
