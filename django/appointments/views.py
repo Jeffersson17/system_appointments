@@ -1,6 +1,6 @@
 from appointments.models import Appointment
-from rest_framework import viewsets, generics
 from appointments.serializers import AppointmentSerializer
+from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 
 

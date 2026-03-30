@@ -1,5 +1,5 @@
-from django.db import models
 import shortuuid
+from django.db import models
 
 
 class Appointment(models.Model):
@@ -27,4 +27,3 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment {self.client} - {self.scheduled_at.strftime('%Y-%m-%d %H:%M')}"
-    
