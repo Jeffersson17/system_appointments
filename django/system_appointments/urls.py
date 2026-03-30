@@ -1,3 +1,4 @@
+from appointments.views import AppointmentViewSet
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
@@ -9,6 +10,7 @@ from services.views import ServiceViewSet
 from user.views import UserViewSet
 
 router = routers.DefaultRouter()
+router.register(r"appointments", AppointmentViewSet)
 router.register(r"users", UserViewSet)
 router.register(r"services", ServiceViewSet)
 router.register(r"enterprises", EnterpriseViewSet)
