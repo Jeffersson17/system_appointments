@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from clients.views import ClientViewSet
 from enterprise.views import EnterpriseViewSet
 from services.views import ServiceViewSet
-from user.views import UserViewSet, LoginView
+from user.views import LoginView, UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r"appointments", AppointmentViewSet)

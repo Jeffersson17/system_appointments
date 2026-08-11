@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from user.models import User
-from user.serializers import UserSerializer, CustomTokenObtainPairSerializer
+from user.serializers import CustomTokenObtainPairSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
