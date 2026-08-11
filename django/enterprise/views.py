@@ -23,6 +23,12 @@ class EnterpriseViewSet(viewsets.ModelViewSet):
             return Enterprise.objects.all()
         return Enterprise.objects.filter(user=user)
 
+    def perform_destroy(self, instance):
+        # Ao deletar uma instância de empresa, também deletamos o usuário associado a ela
+        user = instance.user
+        instance.delete() # Deleta a instância da empresa
+        user.delete()  # Deleta o usuário associado à empresa
+
 
 class EnterpriseDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Enterprise.objects.all()
