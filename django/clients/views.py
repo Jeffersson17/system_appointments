@@ -17,6 +17,12 @@ class ClientViewSet(viewsets.ModelViewSet):
         "phone_number": ["exact", "icontains"],
     }
 
+    def perform_destroy(self, instance):
+        # Ao deletar uma instância de cliente, também deletamos o usuário associado a ela
+        user = instance.user
+        instance.delete()  # Deleta a instância do cliente
+        user.delete()  # Deleta o usuário associado ao cliente
+
 
 class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
