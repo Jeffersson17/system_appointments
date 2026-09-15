@@ -1,11 +1,18 @@
 from appointments.models import Appointment
 from rest_framework import serializers
+from clients.serializers import ClientSerializer
+from enterprise.serializers import EnterpriseSerializer
+from services.serializers import ServiceSerializer
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(read_only=True)
+    enterprise = EnterpriseSerializer(read_only=True)
+    service = ServiceSerializer(read_only=True)
+
     class Meta:
         model = Appointment
-        fields = "__all__"
+        fields = ["scheduled_at", "observation", "status", "created_at", "client", "enterprise", "service"]
 
     def validate(self, data):
         user = self.context["request"].user
