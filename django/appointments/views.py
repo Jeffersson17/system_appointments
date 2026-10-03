@@ -9,6 +9,14 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     serializer_class = AppointmentSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.role != "ADMIN":
+            queryset = queryset.filter(
+                enterprise=self.request.user.enterprise
+            )
+        return queryset
+
 
 class AppointmentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Appointment.objects.all()

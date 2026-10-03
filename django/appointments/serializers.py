@@ -3,6 +3,7 @@ from rest_framework import serializers
 from clients.serializers import ClientSerializer
 from enterprise.serializers import EnterpriseSerializer
 from services.serializers import ServiceSerializer
+from rest_framework.exceptions import PermissionDenied
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
@@ -24,3 +25,11 @@ class AppointmentSerializer(serializers.ModelSerializer):
             if queryset.exists():
                 raise serializers.ValidationError({"detail": "Você já possui um agendamento ativo."})
         return data
+
+    def create(self, validated_data):
+        user = self.request.user
+        if user.role != "CLIENT":
+            raise PermissionDenied("Apenas clientes podem criar agendamentos.")
+        validated_data["client"] = user.client
+        validated_data["enterprise"] = user.enterprise
+        return super().create(validated_data)
