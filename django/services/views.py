@@ -16,6 +16,14 @@ class ServiceViewSet(viewsets.ModelViewSet):
         "service_name": ["exact", "icontains"],
     }
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.role != "ADMIN":
+            queryset = queryset.filter(
+                enterprise=self.request.user.enterprise
+            )
+        return queryset
+
 
 class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Services.objects.all()
