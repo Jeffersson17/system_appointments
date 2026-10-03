@@ -3,12 +3,12 @@ version: "3.7"
 services:
   postgres:
     image: postgres:15
-    container_name: postgresql
+    container_name: system_appointments_postgresql
     restart: always
     env_file:
       - ./envs/postgres.env
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/system_appointments_postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres", "-d", "appointments"]
       interval: 10s
