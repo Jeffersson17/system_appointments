@@ -31,7 +31,7 @@ class EnterpriseSerializer(serializers.ModelSerializer):
             fields["email"].required = True
             fields["password"].required = True
         return fields
-    
+
     def update(self, instance, validated_data):
         email = validated_data.pop("email", None)
         is_active = validated_data.pop("is_active", None)

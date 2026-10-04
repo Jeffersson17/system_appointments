@@ -26,7 +26,7 @@ class EnterpriseViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         # Ao deletar uma instância de empresa, também deletamos o usuário associado a ela
         user = instance.user
-        instance.delete() # Deleta a instância da empresa
+        instance.delete()  # Deleta a instância da empresa
         user.delete()  # Deleta o usuário associado à empresa
 
 
