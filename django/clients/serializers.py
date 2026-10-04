@@ -3,11 +3,13 @@ from rest_framework import serializers
 from clients.models import Client
 from user.models import User
 from user.serializers import UserSerializer
+from enterprise.serializers import EnterpriseSerializer
 
 
 class ClientSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     email = serializers.EmailField(write_only=True)
+    enterprise = EnterpriseSerializer(read_only=True)
     password = serializers.CharField(write_only=True)
 
     class Meta:
