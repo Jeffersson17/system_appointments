@@ -1,3 +1,4 @@
+from core.permissions import IsEnterprise
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -9,13 +10,20 @@ from clients.serializers import ClientSerializer
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEnterprise]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {
         "first_name": ["exact", "icontains"],
         "last_name": ["exact", "icontains"],
         "phone_number": ["exact", "icontains"],
     }
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.role == "ADMIN" or user.is_superuser:
+            return queryset
+        return queryset.filter(enterprise=user.enterprise)
 
     def perform_destroy(self, instance):
         # Ao deletar uma instância de cliente, também deletamos o usuário associado a ela
@@ -27,4 +35,11 @@ class ClientViewSet(viewsets.ModelViewSet):
 class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsEnterprise]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.role == "ADMIN" or user.is_superuser:
+            return queryset
+        return queryset.filter(enterprise=user.enterprise)
