@@ -6,6 +6,7 @@ from user.serializers import UserSerializer
 from enterprise.serializers import EnterpriseSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import PermissionDenied
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -42,18 +43,30 @@ class ClientSerializer(serializers.ModelSerializer):
             )
         return super().destroy(request, *args, **kwargs)
 
+    def update(self, instance, validated_data):
+        request = self.context.get("request")
+        if request.user.role not in ["ENTERPRISE", "ADMIN"]:
+            return PermissionDenied("Você não tem permissão para atualizar clientes.")
+        if request.user.role == "ENTERPRISE" and request.user.enterprise != instance.enterprise:
+            return PermissionDenied("Você não tem permissão para atualizar clientes de outra empresa.")
+        password = validated_data.pop("password", None)
+        if password:
+            instance.user.set_password(password)
+            instance.user.save()
+        return super().update(instance, validated_data)
+
     def get_fields(self):
         fields = super().get_fields()
         request = self.context.get("request")
         if request and request.method in ["POST"]:
             fields["email"].required = True
             fields["password"].required = True
-        else:
-            fields.pop("email", None)
-            fields.pop("password", None)
         return fields
 
     def validate_phone_number(self, value):
-        if Client.objects.filter(phone_number=value).exists():
-            raise serializers.ValidationError("Ja existe um cliente com esse número de telefone. Digite outro número.")
+        queryset = Client.objects.filter(phone_number=value)
+        if self.instance:
+            queryset = queryset.exclude(pk=self.instance.pk)
+        if queryset.exists():
+            raise serializers.ValidationError("Este número de telefone já está registrado. Tente outro numero.")
         return value
