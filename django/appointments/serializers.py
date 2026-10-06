@@ -1,8 +1,9 @@
+from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
+
 from appointments.models import Appointment
 from clients.serializers import ClientSerializer
 from enterprise.serializers import EnterpriseSerializer
-from rest_framework import serializers
-from rest_framework.exceptions import PermissionDenied
 from services.models import Services
 from services.serializers import ServiceSerializer
 
