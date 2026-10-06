@@ -1,8 +1,8 @@
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 
 from enterprise.serializers import EnterpriseSerializer
 from services.models import Services
-from rest_framework.exceptions import PermissionDenied
 
 
 class ServiceSerializer(serializers.ModelSerializer):

@@ -1,12 +1,11 @@
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
 
 from clients.models import Client
+from enterprise.serializers import EnterpriseSerializer
 from user.models import User
 from user.serializers import UserSerializer
-from enterprise.serializers import EnterpriseSerializer
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.exceptions import PermissionDenied
 
 
 class ClientSerializer(serializers.ModelSerializer):
