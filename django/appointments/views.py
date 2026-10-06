@@ -11,11 +11,13 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if self.request.user.role != "ADMIN":
-            queryset = queryset.filter(
-                enterprise=self.request.user.enterprise
-            )
-        return queryset
+        user = self.request.user
+
+        if user.role == "ADMIN":
+            return queryset
+        if user.role == "CLIENT":
+            return queryset.filter(client=user.client)
+        return queryset.filter(enterprise=user.enterprise)
 
 
 class AppointmentDetailView(generics.RetrieveUpdateDestroyAPIView):
