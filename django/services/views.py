@@ -16,13 +16,20 @@ class ServiceViewSet(viewsets.ModelViewSet):
         "service_name": ["exact", "icontains"],
     }
 
+    def get_permissions(self):
+        if self.action in ("list", "retrieve"):
+            return [IsAuthenticated()]
+        return [IsAuthenticated(), IsEnterprise()]
+
     def get_queryset(self):
         queryset = super().get_queryset()
-        if self.request.user.role != "ADMIN":
-            queryset = queryset.filter(
-                enterprise=self.request.user.enterprise
-            )
-        return queryset
+        user = self.request.user
+
+        if user.role == "ADMIN":
+            return queryset
+        if user.role == "CLIENT":
+            return queryset.filter(enterprise=user.client.enterprise)
+        return queryset.filter(enterprise=user.enterprise)
 
 
 class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
