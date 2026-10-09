@@ -8,6 +8,8 @@ from clients.views import ClientViewSet
 from enterprise.views import EnterpriseViewSet
 from services.views import ServiceViewSet
 from user.views import LoginView, UserViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r"appointments", AppointmentViewSet)
@@ -23,3 +25,6 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
+
+if settings.DEBUG == True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
