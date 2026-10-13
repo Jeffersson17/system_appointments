@@ -1,4 +1,6 @@
 from appointments.views import AppointmentViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
@@ -8,8 +10,6 @@ from clients.views import ClientViewSet
 from enterprise.views import EnterpriseViewSet
 from services.views import ServiceViewSet
 from user.views import LoginView, UserViewSet
-from django.conf import settings
-from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r"appointments", AppointmentViewSet)

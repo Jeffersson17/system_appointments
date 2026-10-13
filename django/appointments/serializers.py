@@ -5,7 +5,6 @@ from rest_framework.exceptions import PermissionDenied, ValidationError
 from clients.serializers import ClientSerializer
 from enterprise.serializers import EnterpriseSerializer
 from services.models import Services
-from appointments.models import Appointment
 from services.serializers import ServiceSerializer
 
 
@@ -57,14 +56,10 @@ class AppointmentSerializer(serializers.ModelSerializer):
         enterprise = client.enterprise
         scheduled_at = validated_data["scheduled_at"]
         appointment_exists = Appointment.objects.filter(
-            enterprise=enterprise,
-            scheduled_at=scheduled_at,
-            status="SCHEDULED"
+            enterprise=enterprise, scheduled_at=scheduled_at, status="SCHEDULED"
         ).exists()
         if appointment_exists:
-            raise ValidationError(
-                { "detail": "Já existe um agendamento para esse dia e horário."}
-            )
+            raise ValidationError({"detail": "Já existe um agendamento para esse dia e horário."})
         validated_data["client"] = client
         validated_data["enterprise"] = enterprise
         return super().create(validated_data)
