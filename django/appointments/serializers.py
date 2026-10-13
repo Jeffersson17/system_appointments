@@ -1,6 +1,6 @@
 from appointments.models import Appointment
 from rest_framework import serializers
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, ValidationError
 
 from clients.serializers import ClientSerializer
 from enterprise.serializers import EnterpriseSerializer
@@ -52,6 +52,14 @@ class AppointmentSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         if user.role != "CLIENT":
             raise PermissionDenied("Apenas clientes podem criar agendamentos.")
-        validated_data["client"] = user.client
-        validated_data["enterprise"] = user.client.enterprise
+        client = user.client
+        enterprise = client.enterprise
+        scheduled_at = validated_data["scheduled_at"]
+        appointment_exists = Appointment.objects.filter(
+            enterprise=enterprise, scheduled_at=scheduled_at, status="SCHEDULED"
+        ).exists()
+        if appointment_exists:
+            raise ValidationError({"detail": "Já existe um agendamento para esse dia e horário."})
+        validated_data["client"] = client
+        validated_data["enterprise"] = enterprise
         return super().create(validated_data)
