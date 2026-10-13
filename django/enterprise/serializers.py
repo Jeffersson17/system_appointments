@@ -19,8 +19,12 @@ class EnterpriseSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         email = validated_data.pop("email")
         user = User.objects.create_user(
-            name=validated_data["owner_name"], email=email, password=password, role="ENTERPRISE"
+            name=validated_data["owner_name"], 
+            email=email, password=password, 
+            role="ENTERPRISE",
+            is_active=True
         )
+        validated_data.pop("is_active")
         enterprise = Enterprise.objects.create(user=user, **validated_data)
         return enterprise
 
@@ -52,6 +56,10 @@ class EnterpriseSerializer(serializers.ModelSerializer):
         return instance
     
     def validate_email(self, value):
-        if User.objects.filter(email__iexact=value).exists():
+        users = User.objects.filter(email__iexact=value)
+        # Se estiver editando uma empresa, ignora seu próprio usuário
+        if self.instance is not None:
+            users = users.exclude(pk=self.instance.user_id)
+        if users.exists():
             raise serializers.ValidationError("Este e-mail já está cadastrado.")
         return value
