@@ -50,3 +50,8 @@ class EnterpriseSerializer(serializers.ModelSerializer):
         instance.user.save()
 
         return instance
+    
+    def validate_email(self, value):
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError("Este e-mail já está cadastrado.")
+        return value
