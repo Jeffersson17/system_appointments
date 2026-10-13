@@ -16,7 +16,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         if user.role == "ADMIN":
             return queryset
         if user.role == "CLIENT":
-            return queryset.filter(client=user.client)
+            return queryset.filter(enterprise=user.client.enterprise)
         return queryset.filter(enterprise=user.enterprise)
 
 
